@@ -3,7 +3,7 @@
 const split = 3;
 const base_chance = 1;
 const chance_degredation = 0.3;
-const min_size = 30;
+const min_size = 7;
 
 function setup() {
   createCanvas(windowWidth - 20, windowHeight - 20);
@@ -31,7 +31,7 @@ function renderRegion(x, y, w, h, chance) {
         //Center location of individual rectangles
         var x_t = x_tr + ix * w_n + w_n / 2;
         var y_t = y_tr + iy * h_n + h_n / 2;
-        if(sin(x_t * y_t * x * y) < chance) {
+        if(sin(x_t * y_t * x * y * w * h * chance) < chance) {
           renderRegion(x_tr + ix * w_n + w_n / 2,y_tr + iy * h_n + h_n / 2,w_n,h_n,chance * chance_degredation);
         } else {
           fillColor(x_t,y_t);
