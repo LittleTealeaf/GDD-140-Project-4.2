@@ -3,7 +3,7 @@
 const split = 5;
 const base_chance = 0.8;
 const chance_degredation = 0.5;
-const min_size = 2;
+const min_size = 7;
 
 function setup() {
   createCanvas(windowWidth - 20, windowHeight - 20);
@@ -35,17 +35,17 @@ function renderRegion(x, y, w, h, chance) {
           renderRegion(x_tr + ix * w_n + w_n / 2,y_tr + iy * h_n + h_n / 2,w_n,h_n,chance * chance_degredation);
         } else {
           fillColor(x_t,y_t);
-          renderRectangle(x_t,y_t,w_n,h_n);
+          renderObject(x_t,y_t,w_n,h_n);
         }
       }
     }
   } else {
     fillColor(x,y);
-    renderRectangle(x,y,w,h);
+    renderObject(x,y,w,h);
   }
 }
 
-function renderRectangle(x,y,w,h) {
+function renderObject(x,y,w,h) {
   const iterations = Math.min(Math.max(w,h),1000);
   const r = sin(x + y + w + h) * 255;
   const g = sin(r + x + y + w + h) * 255;
