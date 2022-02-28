@@ -46,29 +46,11 @@ function renderRegion(x, y, w, h, chance) {
 }
 
 function renderRectangle(x,y,w,h) {
-  var m = Math.max(w,h);
-  var distance = dist(x,y,x+w/2,y+h/2);
-  for(var i = m; i > 0; i--) {
-    var tw = 0;
-    var th = 0;
-    
-    if(w > h) {
-      tw = i;
-      th = h/w*i;
-    } else {
-      tw = w/h*i;
-      th = i;
-    }
-    
-    var scale = (1 - Math.log(dist(tw,th,0,0) / distance));
-
+  const iterations = 100;
+  for(var i = iterations; i > 0; i--) {
+    var scale = Math.log(iterations / i)%1;
     fill(scale * ((x + y) % 255), scale * ((x * y)%255), scale * ((255 * y / x + 255 * x / y)%255));
-    
-    if(w > h) {
-      rect(x,y,tw,th);
-    } else {
-      rect(x,y,tw,th);
-    }
+    rect(x,y,w * i / iterations, h * i / iterations)
   }
 }
 
