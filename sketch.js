@@ -46,7 +46,7 @@ function renderRegion(x, y, w, h, chance) {
 }
 
 function renderRectangle(x,y,w,h) {
-  const iterations = 100;
+  const iterations = Math.min(Math.max(w,h),100);
   for(var i = iterations; i > 0; i--) {
     var scale = Math.log(iterations / i)%1;
     fill(scale * ((x + y) % 255), scale * ((x * y)%255), scale * ((255 * y / x + 255 * x / y)%255));
