@@ -2,12 +2,13 @@
 
 const split = 5;
 const base_chance = 0.8;
-const chance_degredation = 0.5;
-const min_size = 7;
+const chance_degredation = 0.4;
+const min_size = 20;
 
 function setup() {
   createCanvas(windowWidth - 20, windowHeight - 20);
   rectMode(CENTER);
+  randomSeed(width,height);
   noStroke();
 }
 
@@ -15,6 +16,7 @@ function draw() {
   background(0);
   renderRegion(width / 2, height / 2, width, height,base_chance);
   noLoop();
+  
 }
 
 function renderRegion(x, y, w, h, chance) {
@@ -31,16 +33,14 @@ function renderRegion(x, y, w, h, chance) {
         //Center location of individual rectangles
         var x_t = x_tr + ix * w_n + w_n / 2;
         var y_t = y_tr + iy * h_n + h_n / 2;
-        if(sin(x_t * y_t * x * y * w * h * chance) < chance) {
+        if(random() < chance) {
           renderRegion(x_tr + ix * w_n + w_n / 2,y_tr + iy * h_n + h_n / 2,w_n,h_n,chance * chance_degredation);
         } else {
-          fillColor(x_t,y_t);
           renderObject(x_t,y_t,w_n,h_n);
         }
       }
     }
   } else {
-    fillColor(x,y);
     renderObject(x,y,w,h);
   }
 }
@@ -56,10 +56,6 @@ function renderObject(x,y,w,h) {
     fill(r * scale,g * scale,b * scale);
     ellipse(x,y,w * i / iterations, h * i / iterations);
   }
-}
-
-function fillColor(x, y) {
-  fill(sin(x + y) * 255,cos(x + y) * 255,tan(x + y) * 255);
 }
 
 /**
