@@ -2,7 +2,7 @@
 
 const split = 3;
 const base_chance = 1;
-const chance_degredation = 0.5;
+const chance_degredation = 0.3;
 const min_size = 30;
 
 function setup() {
@@ -35,16 +35,42 @@ function renderRegion(x, y, w, h, chance) {
           renderRegion(x_tr + ix * w_n + w_n / 2,y_tr + iy * h_n + h_n / 2,w_n,h_n,chance * chance_degredation);
         } else {
           fillColor(x_t,y_t);
-          rect(x_t,y_t,w_n,h_n);
+          renderRectangle(x_t,y_t,w_n,h_n);
         }
       }
     }
   } else {
     fillColor(x,y);
-    rect(x,y,w,h);
+    renderRectangle(x,y,w,h);
   }
 }
 
+function renderRectangle(x,y,w,h) {
+  var m = Math.max(w,h);
+  var distance = dist(x,y,x+w/2,y+h/2);
+  for(var i = m; i > 0; i--) {
+    var tw = 0;
+    var th = 0;
+    
+    if(w > h) {
+      tw = i;
+      th = h/w*i;
+    } else {
+      tw = w/h*i;
+      th = i;
+    }
+    
+    var scale = (1 - Math.log(dist(tw,th,0,0) / distance));
+
+    fill(scale * ((x + y) % 255), scale * ((x * y)%255), scale * ((255 * y / x + 255 * x / y)%255));
+    
+    if(w > h) {
+      rect(x,y,tw,th);
+    } else {
+      rect(x,y,tw,th);
+    }
+  }
+}
 
 function fillColor(x, y) {
   fill(sin(x + y) * 255,cos(x + y) * 255,tan(x + y) * 255);
