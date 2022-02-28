@@ -1,9 +1,9 @@
 /// <reference path="./libraries/p5.global-mode.d.ts" />
 
-const split = 3;
-const base_chance = 1;
+const split = 5;
+const base_chance = 0.8;
 const chance_degredation = 0.5;
-const min_size = 50;
+const min_size = 2;
 
 function setup() {
   createCanvas(windowWidth - 20, windowHeight - 20);
@@ -47,9 +47,13 @@ function renderRegion(x, y, w, h, chance) {
 
 function renderRectangle(x,y,w,h) {
   const iterations = Math.min(Math.max(w,h),1000);
+  const r = sin(x + y + w + h) * 255;
+  const g = sin(r + x + y + w + h) * 255;
+  const b = sin(r + g + x + y + w + h) * 255;
   for(var i = iterations; i > 0; i--) {
-    var scale = 1 - i / iterations + 0.2;
-    fill(scale * (sin(x * y) * 255), scale * (cos(x * y) * 255), scale * (sin(x * y) * cos(x * y) * 255));
+    var scale = 0.1 + 1 * (1 - i / iterations);
+    // fill(scale * (sin(x * y) * 255), scale * (cos(x * y) * 255), scale * (sin(x * y) * cos(x * y) * 255));
+    fill(r * scale,g * scale,b * scale);
     ellipse(x,y,w * i / iterations, h * i / iterations);
   }
 }
