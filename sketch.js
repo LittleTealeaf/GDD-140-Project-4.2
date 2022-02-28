@@ -2,7 +2,7 @@
 
 const split = 3;
 const base_chance = 1;
-const chance_degredation = 0.3;
+const chance_degredation = 0.5;
 const min_size = 50;
 
 function setup() {
@@ -48,8 +48,8 @@ function renderRegion(x, y, w, h, chance) {
 function renderRectangle(x,y,w,h) {
   const iterations = Math.min(Math.max(w,h),1000);
   for(var i = iterations; i > 0; i--) {
-    var scale = (1 - i / iterations) + 0.1;
-    fill(scale * (sin(x + y) * 255), scale * (cos(x + y) * 255), scale * ((255 * y / x + 255 * x / y)%255));
+    var scale = 1 - i / iterations + 0.2;
+    fill(scale * (sin(x * y) * 255), scale * (cos(x * y) * 255), scale * (sin(x * y) * cos(x * y) * 255));
     ellipse(x,y,w * i / iterations, h * i / iterations);
   }
 }
