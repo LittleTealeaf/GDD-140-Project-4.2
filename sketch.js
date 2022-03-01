@@ -3,7 +3,7 @@
 const split = 2;
 const base_chance = 0.8;
 const chance_degredation = 0.4;
-const min_size = 20;
+const min_size = 1;
 
 function setup() {
   createCanvas(windowWidth - 20, windowHeight - 20);
@@ -47,12 +47,9 @@ function renderRegion(x, y, w, h) {
 
 function renderObject(x,y,w,h) {
   const iterations = Math.min(Math.max(w,h),1000);
-  const r = sin(x + y + w + h) * 255;
-  const g = sin(r + x + y + w + h) * 255;
-  const b = sin(r + g + x + y + w + h) * 255;
   for(var i = iterations; i > 0; i--) {
-    var scale = 0.1 + 1 * (1 - i / iterations);
-    fill(r * scale,g * scale,b * scale);
+    var scale = 0.1 + 1 * (1 - i / iterations) * dist(x,y,width/2,height/2) / dist(0,0,width/w,height/2);
+    fill(scale * 255)
     ellipse(x,y,w * i / iterations, h * i / iterations);
   }
 }
