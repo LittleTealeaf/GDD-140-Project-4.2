@@ -1,6 +1,6 @@
 /// <reference path="./libraries/p5.global-mode.d.ts" />
 
-const split = 5;
+const split = 2;
 const base_chance = 0.8;
 const chance_degredation = 0.4;
 const min_size = 20;
