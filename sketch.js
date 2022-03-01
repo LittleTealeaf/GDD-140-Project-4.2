@@ -14,12 +14,12 @@ function setup() {
 
 function draw() {
   background(0);
-  renderRegion(width / 2, height / 2, width, height,base_chance);
+  renderRegion(width / 2, height / 2, width, height);
   noLoop();
   
 }
 
-function renderRegion(x, y, w, h, chance) {
+function renderRegion(x, y, w, h) {
   if (w > min_size && h > min_size) {
     //top right position
     var x_tr = x - w / 2;
@@ -33,8 +33,8 @@ function renderRegion(x, y, w, h, chance) {
         //Center location of individual rectangles
         var x_t = x_tr + ix * w_n + w_n / 2;
         var y_t = y_tr + iy * h_n + h_n / 2;
-        if(random() < chance) {
-          renderRegion(x_tr + ix * w_n + w_n / 2,y_tr + iy * h_n + h_n / 2,w_n,h_n,chance * chance_degredation);
+        if(dist(x_t,y_t,width/2,height/2) < dist(0,0,w,h)) {
+          renderRegion(x_tr + ix * w_n + w_n / 2,y_tr + iy * h_n + h_n / 2,w_n,h_n);
         } else {
           renderObject(x_t,y_t,w_n,h_n);
         }
@@ -52,7 +52,6 @@ function renderObject(x,y,w,h) {
   const b = sin(r + g + x + y + w + h) * 255;
   for(var i = iterations; i > 0; i--) {
     var scale = 0.1 + 1 * (1 - i / iterations);
-    // fill(scale * (sin(x * y) * 255), scale * (cos(x * y) * 255), scale * (sin(x * y) * cos(x * y) * 255));
     fill(r * scale,g * scale,b * scale);
     ellipse(x,y,w * i / iterations, h * i / iterations);
   }
